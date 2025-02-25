@@ -1,16 +1,27 @@
 import * as React from "react"
-import { useEffect, useState } from "react"
+import { useCallback, useEffect, useState } from "react"
 import { flushSync } from "react-dom"
 import { createRoot } from "react-dom/client"
 import Dice from "./Dice"
 import Labels from "./Labels"
 import Light from "./Light"
-import { EtherbaseProvider } from "@msquared/etherbase-client"
+import { EtherbaseEvent, EtherbaseProvider, useEtherbaseEvents } from "@msquared/etherbase-client"
 
 function App() {
+  const sourceAddress = "0x2e30b662c4Df268edA9efce596CDF3896b50B43C"
+
+
   const [connectedClients, setConnectedClients] = useState(0)
   const [diceClickCount, setDiceClickCount] = useState(0)
   const [totalUptimeSeconds, setTotalUptimeSeconds] = useState(0)
+
+  const [lastDiceRoll, setLastDiceRoll] = useState(0)
+
+  const handleDiceRoll = useCallback((event: EtherbaseEvent) => {
+    setLastDiceRoll(event.args["result"] as number)
+  }, [])
+  useEtherbaseEvents({contractAddress: sourceAddress, events: [{name: "DiceRoll"}], onEvent: handleDiceRoll})
+
 
   const onDiceClick = () => {
     setDiceClickCount((n) => n + 1)
@@ -62,8 +73,9 @@ function App() {
         connectedText={`Connected clients: ${connectedClients}`}
         rollsText={`Dice clicks: ${diceClickCount}`}
         uptimeText={`Uptime: ${uptimeLabelText}`}
+        lastDiceRollText={`Last Dice Roll (Etherbase): ${lastDiceRoll}`}
       />
-      <Dice onClick={onDiceClick} />
+      <Dice onClick={onDiceClick} sourceAddress={sourceAddress}/>
     </>
   )
 }

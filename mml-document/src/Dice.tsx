@@ -1,6 +1,7 @@
 import { MGroupAttributes } from "@mml-io/mml-react-types"
 import React, { useState } from "react"
 import { useEtherbaseSource } from "@msquared/etherbase-client"
+import { Address } from "viem"
 
 const rollMap = {
   1: [0, 0, 0],
@@ -19,13 +20,12 @@ const diceHeight = 2
 const halfDiceHeight = diceHeight / 2
 const totalDuration = Math.max(upDuration + downDuration, rollDuration)
 
-export default function Dice(props: MGroupAttributes) {
+export default function Dice(props: MGroupAttributes & {sourceAddress: Address}) {
   const [previousResult, setPreviousResult] = useState<DiceNumber>(1)
   const [currentResult, setCurrentResult] = useState<DiceNumber>(1)
   const [rollTime, setRollTime] = useState(-totalDuration)
 
-  const sourceAddress = "0x2e30b662c4Df268edA9efce596CDF3896b50B43C"
-  const { emitEvent } = useEtherbaseSource({ sourceAddress })
+  const { emitEvent } = useEtherbaseSource({ sourceAddress: props.sourceAddress })
 
   const rollDice = async () => {
     const t = document.timeline.currentTime as number

@@ -41,7 +41,7 @@ event DiceRoll(uint256 result)
 
 Take your private key and set the value in `EtherbaseProvider` [./mml-document/src/index.tsx](./mml-document/src/index.tsx), replacing the placeholder private key.
 
-Finally, go to [./mml-document/src/Dice.tsx](./mml-document/src/Dice.tsx) and change the `sourceAddress` to the contract address of the source contract you created.
+Also in `index.tsx` change the `sourceAddress` to the contract address of the source contract you created.
 
 ### Running locally
 

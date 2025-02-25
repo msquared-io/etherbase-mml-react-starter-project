@@ -4,10 +4,12 @@ export default function Labels({
   connectedText,
   rollsText,
   uptimeText,
+  lastDiceRollText
 }: {
   connectedText: string;
   rollsText: string;
   uptimeText: string;
+  lastDiceRollText: string;
 }) {
   return (
     <m-group y="7">
@@ -40,6 +42,16 @@ export default function Labels({
         font-color="#172554"
         alignment="center"
         content={rollsText}
+      ></m-label>
+      <m-label
+        id="last-dice-roll-label"
+        y="-1"
+        width="4"
+        height="0.5"
+        color="#bfdbfe"
+        font-color="#172554"
+        alignment="center"
+        content={lastDiceRollText}
       ></m-label>
     </m-group>
   );
