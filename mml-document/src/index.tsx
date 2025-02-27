@@ -68,7 +68,7 @@ function App() {
 
   return (
     <>
-      <Light />
+      {/* <Light /> */}
       <Labels
         connectedText={`Connected clients: ${connectedClients}`}
         rollsText={`Dice clicks: ${diceClickCount}`}
